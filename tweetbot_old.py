@@ -5,10 +5,10 @@ import tweepy, time, sys, dada
  
  
 #enter the corresponding information from your Twitter application:
-CONSUMER_KEY = 'Tz8HUw6lZZhh04iRFvowzaFAx'
-CONSUMER_SECRET = '4JLP0MsupmKYp1qHTrvifDbATDmpYHz21hx8pj2YSbro14NX4i'
-ACCESS_KEY = '3078493577-dmEWlkLKy1oSSgevjyhmmFoEHRCFeP04rOazBRC'
-ACCESS_SECRET = 'NhLjDhZTs8azIT8rHY0tA8dvGZRSoQAu4nYfZNIUwW8Ap'
+CONSUMER_KEY = 'Scrubbed'
+CONSUMER_SECRET = 'Nope'
+ACCESS_KEY = 'bad idea'
+ACCESS_SECRET = 'not on a public git project'
 twit = dada.dada()
 
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
