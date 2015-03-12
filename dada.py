@@ -88,7 +88,8 @@ def vowel_letter():  # Reserved for future use. returns a vowel
 def cons_letter():  # Reserved for future use. returns a consonant
     pass
 
-
+"""
+Function no longer needed.  Probability tables hard coded as tuples.
 def fill_table(source): # Reads probability tables and sets type
     target = []
     with open(source, 'rtm') as f:
@@ -97,9 +98,9 @@ def fill_table(source): # Reads probability tables and sets type
             target.append(row)
             target[-1][1] = float(target[-1][1])
     return target
+"""
 
-
-def dada(first_letter, two_letter, general_letter):
+def dada():
     word_lengths = []  
     tweet = ""  
     chars_in_tweet = 0  # Character counter so it stays a tweet and not a book
