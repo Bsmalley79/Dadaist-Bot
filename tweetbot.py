@@ -14,17 +14,15 @@ ACCESS_KEY = '3078493577-dmEWlkLKy1oSSgevjyhmmFoEHRCFeP04rOazBRC'
 ACCESS_SECRET = 'NhLjDhZTs8azIT8rHY0tA8dvGZRSoQAu4nYfZNIUwW8Ap'
 
 
-
-# while True
-# {
-twit = dada.dada()
+while True
+    twit = dada.dada()
 # dada.dada takes a while to run. it's here to avoid twitter time out
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-api = tweepy.API(auth)
-api.update_status(status=twit)
-print (time.process_time()) #lets see how long this takes
-# timer = random.randint(1 * 60, 11 * 60) * 60
-# time.sleep(timer) #Tweet at random between 1 and 11 hours
-# }
-# assert False "You shouldn't be here"
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+    api = tweepy.API(auth)
+    api.update_status(status=twit)
+
+    timer = random.randint(1 * 60, 11 * 60) * 60
+    time.sleep(timer) # Tweet at random between 1 and 11 hours
+
+assert False "You shouldn't be here"
