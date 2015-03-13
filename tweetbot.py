@@ -24,7 +24,7 @@ auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 api.update_status(status=twit)
 print (time.process_time()) #lets see how long this takes
-# timer = random.randint(37, 11 * 60) * 60
-# time.sleep(timer) #Tweet at random between 37 minutes and 11 hours
+# timer = random.randint(1 * 60, 11 * 60) * 60
+# time.sleep(timer) #Tweet at random between 1 and 11 hours
 # }
 # assert False "You shouldn't be here"

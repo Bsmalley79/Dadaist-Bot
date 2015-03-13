@@ -1,5 +1,4 @@
 import random
-import csv
 
 first_letter = (('a', 0.11602), ('b', 0.04702), ('c', 0.03511),
  ('d', 0.0267), ('e', 0.02), ('f', 0.03779), ('g', 0.0195),
@@ -79,15 +78,64 @@ def how_long():  # Returns word length from 1 to 13 letters
     # letters is limited to 13 because upto = 1 at letters = inf
     return letters
 
+    
+def long_word(numb_letters):
+    word = ""
 
-# Research indicates maximum of 3 vowels in a row, and max 4 consonants
-def vowel_letter():  # Reserved for future use. returns a vowel
-    pass
+    word += weighted_choice(first_letter)
+    if word in vowel_set:
+        vcount = 1
+        ccount = 0
+    else:
+        vcount = 0
+        ccount = 1
 
+    word += weighted_choice(general_letter)
+    if word[-1] in vowel_set:
+        vcount += 1
+        ccount = 0
+    else:
+        vcount = 0
+        ccount += 1
 
-def cons_letter():  # Reserved for future use. returns a consonant
-    pass
+# Can't think of any word that starts with a triple consonant
+    if ccount == 2:
+        word += weighted_choice(vowel_letter)
+        vcount = 1
+        ccount = 0
+    else:
+        word += weighted_choice(general_letter)
+        if word[-1] in vowel_set:
+            vcount += 1
+            ccount = 0
+        else:
+            vcount = 0
+            ccount += 1
+    if numb_letters == 3:
+        return word
 
+# Research indicates maximum of 3 vowels in a row, and max 4 consonants.
+    else:  # Does this else need to be here? -BSmalley79
+        for k in range(4, numb_letters + 1):
+            if vcount == 3:
+                word += weighted_choice(consonant_letter)
+                vcount = 0
+                ccount = 1
+            elif ccount == 4:
+                word += weighted_choice(vowel_letter)
+                vcount = 1
+                ccount = 0
+            else:
+                word += weighted_choice(general_letter)
+                if word[-1] in vowel_set:
+                    vcount += 1
+                    ccount = 0
+                else:
+                    vcount = 0
+                    ccount += 1
+        return word
+
+        
 """
 Function no longer needed.  Probability tables hard coded as tuples.
 def fill_table(source): # Reads probability tables and sets type
@@ -99,6 +147,7 @@ def fill_table(source): # Reads probability tables and sets type
             target[-1][1] = float(target[-1][1])
     return target
 """
+
 
 def dada():
     word_lengths = []  
@@ -128,8 +177,5 @@ def dada():
         elif word_lengths[i] == 2:
             tweet += (weighted_choice(two_letter) + ' ')
         else:
-            tweet += weighted_choice(first_letter)
-            for k in range(2, word_lengths[i] + 1):
-                tweet += weighted_choice(general_letter)
-            tweet += ' '
+            tweet += (long_word(word_lengths[i]) + ' ')
     return tweet
