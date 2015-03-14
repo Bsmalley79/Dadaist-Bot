@@ -14,7 +14,7 @@ ACCESS_KEY = '3078493577-dmEWlkLKy1oSSgevjyhmmFoEHRCFeP04rOazBRC'
 ACCESS_SECRET = 'NhLjDhZTs8azIT8rHY0tA8dvGZRSoQAu4nYfZNIUwW8Ap'
 
 
-while True
+while True:
     twit = dada.dada()
 # dada.dada takes a while to run. it's here to avoid twitter time out
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
