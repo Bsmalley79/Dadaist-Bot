@@ -25,4 +25,4 @@ while True:
     timer = random.randint(1 * 60, 11 * 60) * 60
     time.sleep(timer) # Tweet at random between 1 and 11 hours
 
-assert False "You shouldn't be here"
+assert False, "You shouldn't be here"
