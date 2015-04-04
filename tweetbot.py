@@ -21,8 +21,10 @@ while True:
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     api = tweepy.API(auth)
     api.update_status(status=twit)
-
-    timer = random.randint(1 * 60, 11 * 60) * 60
-    time.sleep(timer) # Tweet at random between 1 and 11 hours
+    print(twit)
+    
+    timer = random.randint(1 * 15, 11 * 15)
+    print(timer)
+    time.sleep(timer * 60) # Tweet at random between 1 and 11 hours
 
 assert False, "You shouldn't be here"
