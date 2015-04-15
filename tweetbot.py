@@ -8,10 +8,7 @@ import tweepy
 import dada
 
 # Twitter validation information:
-CONSUMER_KEY = 'Tz8HUw6lZZhh04iRFvowzaFAx'
-CONSUMER_SECRET = '4JLP0MsupmKYp1qHTrvifDbATDmpYHz21hx8pj2YSbro14NX4i'
-ACCESS_KEY = '3078493577-dmEWlkLKy1oSSgevjyhmmFoEHRCFeP04rOazBRC'
-ACCESS_SECRET = 'NhLjDhZTs8azIT8rHY0tA8dvGZRSoQAu4nYfZNIUwW8Ap'
+# These are not the keys you're looking for
 
 try:
     while True:
