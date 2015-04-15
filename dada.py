@@ -122,7 +122,12 @@ def long_word(numb_letters):
                 vcount = 1
                 ccount = 0
             else:
-                word += weighted_choice(general_letter)
+                tempchar = weighted_choice(general_letter)
+# Re-roll in the case of triple letters.
+                while word[-1] == word[-2] == tempchar:
+                    tempchar = weighted_choice(general_letter)
+                word += tempchar
+                
                 if word[-1] in vowel_set:
                     vcount += 1
                     ccount = 0
