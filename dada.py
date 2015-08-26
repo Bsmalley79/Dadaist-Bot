@@ -150,12 +150,11 @@ def fill_table(source): # Reads probability tables and sets type
 """
 
 
-def dada():
+def dada(chars_in_tweet):
     word_lengths = []  
     tweet = ""  
-    chars_in_tweet = 0  # Character counter so it stays a tweet and not a book
 
-    while chars_in_tweet < 140:
+    while chars_in_tweet < 140: # Character counter so it stays a tweet and not a book
         length = how_long()
         word_lengths.append(length)
         chars_in_tweet += (length + 1)  # 1 for the space

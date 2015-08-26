@@ -8,11 +8,20 @@ import tweepy
 import dada
 
 # Twitter validation information:
-# These are not the keys you're looking for
+target = []
+with open('keys.csv') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        target.append(row)
+        
+CONSUMER_KEY = ''.join(target[0])
+CONSUMER_SECRET = ''.join(target[1])
+ACCESS_KEY = ''.join(target[2])
+ACCESS_SECRET = ''.join(target[3])
 
 try:
     while True:
-        twit = dada.dada()
+        twit = dada.dada(0)
 # dada.dada takes a while to run. it's here to avoid twitter time out
         auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
@@ -20,9 +29,9 @@ try:
         api.update_status(status=twit)
         print(twit)
     
-        timer = random.randint(1 * 15, 11 * 15)
+        timer = random.randint(1 * 5, 12 * 5)
         print(timer)
-        time.sleep(timer * 60) # Tweet at random between 1 and 11 hours
+        time.sleep(timer * 60) # Tweet at random 
 except KeyboardInterrupt:
     print("Thank you for using Dadaist Bot. Shutting down.")
 
