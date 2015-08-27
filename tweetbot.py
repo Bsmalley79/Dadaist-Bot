@@ -2,6 +2,7 @@
 
 import time
 import random
+import csv
 
 import tweepy
 
@@ -34,4 +35,6 @@ try:
         time.sleep(timer * 60) # Tweet at random 
 except KeyboardInterrupt:
     print("Thank you for using Dadaist Bot. Shutting down.")
+except TweepError:
+    print("Unable to contact Twitter services.  Please check your Internet connection.")
 

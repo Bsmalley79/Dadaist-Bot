@@ -22,8 +22,12 @@ ACCESS_SECRET = ''.join(target[3])
 
 twit = "@" + str(sys.argv[1]) + " "
 twit += dada.dada(len(twit))
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-api = tweepy.API(auth)
-api.update_status(status=twit)
-print(twit)
+try:
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+    api = tweepy.API(auth)
+    api.update_status(status=twit)
+except TweepError:
+    print("Unable to contact Twitter services.  Please check your Internet connection.")
+finally:
+    print(twit)
