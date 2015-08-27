@@ -35,6 +35,6 @@ try:
         time.sleep(timer * 60) # Tweet at random 
 except KeyboardInterrupt:
     print("Thank you for using Dadaist Bot. Shutting down.")
-except TweepError:
+except tweepy.error.TweepError:
     print("Unable to contact Twitter services.  Please check your Internet connection.")
 

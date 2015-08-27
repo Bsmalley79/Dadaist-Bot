@@ -27,7 +27,7 @@ try:
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     api = tweepy.API(auth)
     api.update_status(status=twit)
-except TweepError:
+except tweepy.error.TweepError:
     print("Unable to contact Twitter services.  Please check your Internet connection.")
 finally:
     print(twit)
