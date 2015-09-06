@@ -30,9 +30,9 @@ try:
         api.update_status(status=twit)
         print(twit)
     
-        timer = random.randint(1 * 5, 12 * 5)
+        timer = random.randint(5, 60) #at least 1/hr but no more than every 5 minutes
         print(timer)
-        time.sleep(timer * 60) # Tweet at random 
+        time.sleep(timer * 60) 
 except KeyboardInterrupt:
     print("Thank you for using Dadaist Bot. Shutting down.")
 except tweepy.error.TweepError:
