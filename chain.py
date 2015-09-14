@@ -15,7 +15,9 @@ def chain(api):
     table = {}
     statuses = api.home_timeline(count=50)
     for tweet in statuses:
-        for char in tweet.text:
+        base = tweet.text
+        base = base.replace('http://', '')
+        for char in base:
             if not (c1 == c2 and c2 == char):
                 table.setdefault((c1, c2), []).append(char)
                 c1, c2 = c2, char

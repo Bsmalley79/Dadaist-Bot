@@ -51,7 +51,7 @@ try:
         try:
             print(twit)
         except UnicodeEncodeError:
-            print("The bot tried to speak unicode.")
+            print(repr(twit))
 
 # At least 1 tweet every hour, but no more than every 5 minutes
         timer = random.randint(5, 60)
