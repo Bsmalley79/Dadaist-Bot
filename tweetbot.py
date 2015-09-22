@@ -37,6 +37,7 @@ try:
     tbot = login()
     while True:
         roll = random.randint(1, 20)
+        print(roll)
         if roll == 1:
             twit = dada.dada(0)
         # elif roll == 20: twit = wordchain.chain(tbot)
@@ -44,10 +45,15 @@ try:
             try:
                 twit = chain.chain(tbot)
             except tweepy.error.TweepError:
+                print("READING FAILURE")
                 tbot = login()
                 twit = chain.chain(tbot)
-        tbot.update_status(status=twit)
-
+        try:
+            tbot.update_status(status=twit)
+        except tweepy.error.TweepError:
+            print("POSTING FAILURE")
+            tbot = login()
+            tbot.update_status(status=twit)
         try:
             print(twit)
         except UnicodeEncodeError:
@@ -60,5 +66,6 @@ try:
 
 except KeyboardInterrupt:
     print("Thank you for using Dadaist Bot. Shutting down.")
-except tweepy.error.TweepError:
-    pass
+# except tweepy.error.TweepError:
+#    print("exiting")
+   
