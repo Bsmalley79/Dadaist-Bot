@@ -2,27 +2,64 @@
 
 import time
 import random
+import csv
 
 import tweepy
 
 import dada
+import chain
+# import wordchain
+
+
+def login():
+    try:
+        auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+        api = tweepy.API(auth)
+        return api
+    except tweepy.error.TweepError:
+        print("Unable to contact Twitter services.")
+        raise
 
 # Twitter validation information:
-CONSUMER_KEY = 'Tz8HUw6lZZhh04iRFvowzaFAx'
-CONSUMER_SECRET = '4JLP0MsupmKYp1qHTrvifDbATDmpYHz21hx8pj2YSbro14NX4i'
-ACCESS_KEY = '3078493577-dmEWlkLKy1oSSgevjyhmmFoEHRCFeP04rOazBRC'
-ACCESS_SECRET = 'NhLjDhZTs8azIT8rHY0tA8dvGZRSoQAu4nYfZNIUwW8Ap'
+target = []
+with open('keys.csv') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        target.append(row)
 
+CONSUMER_KEY = ''.join(target[0])
+CONSUMER_SECRET = ''.join(target[1])
+ACCESS_KEY = ''.join(target[2])
+ACCESS_SECRET = ''.join(target[3])
+watch_dog = 0
 
-while True
-    twit = dada.dada()
-# dada.dada takes a while to run. it's here to avoid twitter time out
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-    api = tweepy.API(auth)
-    api.update_status(status=twit)
+tbot = login()
+while True:
+    try:
+        roll = random.randint(1, 20)
+        print(roll)
+        if roll == 1:
+            twit = dada.dada()
+        # elif roll == 20: twit = wordchain.chain(tbot)
+        else:
+            twit = chain.chain(tbot)
+            tbot.update_status(status=twit)
+        try:
+            print(twit)
+        except UnicodeEncodeError:
+            print("This tweet contains emjoi, see tweetdeck")
 
-    timer = random.randint(1 * 60, 11 * 60) * 60
-    time.sleep(timer) # Tweet at random between 1 and 11 hours
+# At least 1 tweet every hour, but no more than every 5 minutes
+        timer = random.randint(5, 60)
+        print('{}\n'.format(timer))
+        time.sleep(timer * 60)
+        watch_dog = 0
 
-assert False "You shouldn't be here"
+    except tweepy.error.TweepError:
+        tbot = login()
+        watch_dog += 1
+        print("ARF!")
+        if watch_dog >= 8:
+            print("Multiple login errors")
+            break
