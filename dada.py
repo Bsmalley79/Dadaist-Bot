@@ -150,7 +150,7 @@ def fill_table(source): # Reads probability tables and sets type
 """
 
 
-def dada(chars_in_tweet):
+def dada(chars_in_tweet = 0):
     word_lengths = []  
     tweet = ""  
 

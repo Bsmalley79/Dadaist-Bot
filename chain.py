@@ -1,6 +1,5 @@
 import random
-import sys
-import csv
+import re
 
 import tweepy
 
@@ -13,11 +12,10 @@ def chain(api):
     c1 = nonword
     c2 = nonword
     table = {}
-    statuses = api.home_timeline(count=140)
+    statuses = api.home_timeline(count=maxchar)
     for tweet in statuses:
         base = tweet.text
-        base = base.replace('http://', '')
-        base = base.replace('https://', '')
+        base = re.sub(r'https?.{,18}', '', base)
         for char in base:
             if not (c1 == c2 and c2 == char):
                 table.setdefault((c1, c2), []).append(char)

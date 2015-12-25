@@ -32,40 +32,34 @@ CONSUMER_KEY = ''.join(target[0])
 CONSUMER_SECRET = ''.join(target[1])
 ACCESS_KEY = ''.join(target[2])
 ACCESS_SECRET = ''.join(target[3])
+watch_dog = 0
 
-try:
-    tbot = login()
-    while True:
+tbot = login()
+while True:
+    try:
         roll = random.randint(1, 20)
         print(roll)
         if roll == 1:
-            twit = dada.dada(0)
+            twit = dada.dada()
         # elif roll == 20: twit = wordchain.chain(tbot)
         else:
-            try:
-                twit = chain.chain(tbot)
-            except tweepy.error.TweepError:
-                print("READING FAILURE")
-                tbot = login()
-                twit = chain.chain(tbot)
-        try:
-            tbot.update_status(status=twit)
-        except tweepy.error.TweepError:
-            print("POSTING FAILURE")
-            tbot = login()
+            twit = chain.chain(tbot)
             tbot.update_status(status=twit)
         try:
             print(twit)
         except UnicodeEncodeError:
-            print(repr(twit))
+            print("This tweet contains emjoi, see tweetdeck")
 
 # At least 1 tweet every hour, but no more than every 5 minutes
         timer = random.randint(5, 60)
-        print(timer)
+        print('{}\n'.format(timer))
         time.sleep(timer * 60)
+        watch_dog = 0
 
-except KeyboardInterrupt:
-    print("Thank you for using Dadaist Bot. Shutting down.")
-# except tweepy.error.TweepError:
-#    print("exiting")
-   
+    except tweepy.error.TweepError:
+        tbot = login()
+        watch_dog += 1
+        print("ARF!")
+        if watch_dog >= 8:
+            print("Multiple login errors")
+            break
