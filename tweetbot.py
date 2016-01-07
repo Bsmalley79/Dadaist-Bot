@@ -44,7 +44,7 @@ while True:
         # elif roll == 20: twit = wordchain.chain(tbot)
         else:
             twit = chain.chain(tbot)
-            tbot.update_status(status=twit)
+        tbot.update_status(status=twit)
         try:
             print(twit)
         except UnicodeEncodeError:
