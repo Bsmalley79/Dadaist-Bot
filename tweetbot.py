@@ -41,9 +41,15 @@ while True:
         print(roll)
         if roll == 1:
             twit = dada.dada()
-        # elif roll == 20: twit = wordchain.chain(tbot)
+        elif (roll == 2 or roll == 3):
+            twit = chain.chain(tbot, 1)
+        elif (roll == 18 or roll == 19):
+            twit = chain.chain(tbot, 3)
+        elif roll == 20:
+            twit = chain.chain(tbot, 4)
         else:
-            twit = chain.chain(tbot)
+            twit = chain.chain(tbot, 2)
+
         tbot.update_status(status=twit)
         try:
             print(twit)
