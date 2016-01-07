@@ -60,6 +60,6 @@ while True:
         tbot = login()
         watch_dog += 1
         print("ARF!")
-        if watch_dog >= 8:
+        if watch_dog >= 3:
             print("Multiple login errors")
             break
