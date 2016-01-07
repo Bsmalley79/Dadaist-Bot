@@ -6,13 +6,15 @@ import tweepy
 nonword = "\a"
 maxchar = 140  # Tweepy ignores strings over 140 characters
 
+
 def loop_check(item, array):
-	for spam in array
-		if item != spam
-			return False
-	return True
-    
-def chain(api, links = 2):
+    for spam in array:
+    	if item != spam:
+            return False
+    return True
+
+
+def chain(api, links=2):
     # GENERATE TABLE
     markov = []
     table = {}
@@ -41,6 +43,6 @@ def chain(api, links = 2):
             break
         twit += newchar
         for i in range(links):
-                    markov[i] = markov[i+1]
-                markov[-1] = char
+            markov[i] = markov[i+1]
+        markov[-1] = char
     return twit
