@@ -97,7 +97,7 @@ def dada(chars_in_tweet = 0):
         length = how_long()
         word_lengths.append(length)
         chars_in_tweet += (length + 1)  # 1 for the space
-        if chars_in_tweet => 140: 
+        if chars_in_tweet >= 140: 
             word_lengths.pop()
             break
 
