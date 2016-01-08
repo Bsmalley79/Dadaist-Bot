@@ -8,10 +8,9 @@ import tweepy
 
 import dada
 import chain
-# import wordchain
 
 
-def login():
+def login(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_KEY, ACCESS_SECRET):
     try:
         auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
@@ -21,45 +20,52 @@ def login():
         print("Unable to contact Twitter services.")
         raise
 
+def main():
 # Twitter validation information:
-target = []
-with open('keys.csv') as f:
-    reader = csv.reader(f)
-    for row in reader:
-        target.append(row)
+    watch_dog = 0
+    target = []
+    with open('keys.csv') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            target.append(row)
 
-CONSUMER_KEY = ''.join(target[0])
-CONSUMER_SECRET = ''.join(target[1])
-ACCESS_KEY = ''.join(target[2])
-ACCESS_SECRET = ''.join(target[3])
-watch_dog = 0
 
-tbot = login()
-while True:
-    try:
-        roll = random.randint(1, 20)
-        print(roll)
-        if roll == 1:
-            twit = dada.dada()
-        # elif roll == 20: twit = wordchain.chain(tbot)
-        else:
-            twit = chain.chain(tbot)
-            tbot.update_status(status=twit)
+    tbot = login(''.join(target[0]), ''.join(target[1]), ''.join(target[2]), ''.join(target[3]))
+    while True:
         try:
-            print(twit)
-        except UnicodeEncodeError:
-            print("This tweet contains emjoi, see tweetdeck")
+            roll = random.randint(1, 20)
+            print(roll)
+            if roll == 1:
+                twit = dada.dada()
+            elif (roll == 2 or roll == 3):
+                twit = chain.chain(tbot, 1)
+            elif (roll == 18 or roll == 19):
+                twit = chain.chain(tbot, 3)
+            elif roll == 20:
+                twit = chain.chain(tbot, 4)
+            else:
+                twit = chain.chain(tbot, 2)
+
+            tbot.update_status(status=twit)
+            try:
+                print(twit)
+            except UnicodeEncodeError:
+                print("This tweet contains emjoi, see tweetdeck")
 
 # At least 1 tweet every hour, but no more than every 5 minutes
-        timer = random.randint(5, 60)
-        print('{}\n'.format(timer))
-        time.sleep(timer * 60)
-        watch_dog = 0
+            timer = random.randint(5, 60)
+            print('{}\n'.format(timer))
+            time.sleep(timer * 60)
+            watch_dog = 0
 
-    except tweepy.error.TweepError:
-        tbot = login()
-        watch_dog += 1
-        print("ARF!")
-        if watch_dog >= 8:
-            print("Multiple login errors")
-            break
+        except tweepy.error.TweepError:
+            tbot = login(''.join(target[0]), ''.join(target[1]), ''.join(target[2]), ''.join(target[3]))
+            watch_dog += 1
+            print("ARF!")
+            if watch_dog >= 3:
+                print("Multiple login errors")
+                return
+
+
+if __name__ == "__main__":
+    main()
