@@ -48,5 +48,5 @@ def chain(api, links=2):
             try:
                 markov[i] = markov[i+1]
             except IndexError:
-                markov[-1] = char
+                markov[-1] = newchar
     return twit
