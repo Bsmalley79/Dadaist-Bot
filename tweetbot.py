@@ -1,36 +1,20 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import time
 import random
-import csv
 
 import tweepy
 
 import dada
 import chain
+import login
 
-
-def login(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_KEY, ACCESS_SECRET):
-    try:
-        auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-        auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-        api = tweepy.API(auth)
-        return api
-    except tweepy.error.TweepError:
-        print("Unable to contact Twitter services.")
-        raise
 
 def main():
-# Twitter validation information:
+
     watch_dog = 0
-    target = []
-    with open('keys.csv') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            target.append(row)
+    tbot = login.main()
 
-
-    tbot = login(''.join(target[0]), ''.join(target[1]), ''.join(target[2]), ''.join(target[3]))
     while True:
         try:
             roll = random.randint(1, 20)
@@ -59,7 +43,7 @@ def main():
             watch_dog = 0
 
         except tweepy.error.TweepError:
-            tbot = login(''.join(target[0]), ''.join(target[1]), ''.join(target[2]), ''.join(target[3]))
+            tbot = login.main()
             watch_dog += 1
             print("ARF!")
             if watch_dog >= 3:

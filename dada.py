@@ -26,7 +26,7 @@ def how_long():  # Returns word length from 1 to 13 letters
     # letters is limited to 13 because upto = 1 at letters = inf
     return letters
 
-    
+
 def long_word(numb_letters):
     word = ""
 
@@ -59,7 +59,7 @@ def long_word(numb_letters):
         else:
             vcount = 0
             ccount += 1
- 
+
     if numb_letters == 3:
         return word
 # Research indicates maximum of 3 vowels in a row, and max 4 consonants.
@@ -79,7 +79,7 @@ def long_word(numb_letters):
                 while word[-1] == word[-2] == tempchar:
                     tempchar = weighted_choice(general_letter)
                 word += tempchar
-                
+
                 if word[-1] in vowel_set:
                     vcount += 1
                     ccount = 0
@@ -89,17 +89,16 @@ def long_word(numb_letters):
         return word
 
 
-def dada(chars_in_tweet = 0):
-    word_lengths = []  
-    tweet = ""  
+def dada(chars_in_tweet=0):
+    word_lengths = []
+    tweet = ""
 
-    while True: # Character counter so it stays a tweet and not a book
+    while True:  # Character counter so it stays a tweet and not a book
         length = how_long()
-        word_lengths.append(length)
         chars_in_tweet += (length + 1)  # 1 for the space
-        if chars_in_tweet >= 140: 
-            word_lengths.pop()
+        if chars_in_tweet > 140:
             break
+        word_lengths.append(length)
 
     for i in range(len(word_lengths)):
         if i == len(word_lengths) - 1 and word_lengths[i] > 1:
@@ -117,3 +116,6 @@ def dada(chars_in_tweet = 0):
         else:
             tweet += (long_word(word_lengths[i]) + ' ')
     return tweet
+
+if __name__ == "__main__":
+    print(dada())
