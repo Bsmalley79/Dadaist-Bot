@@ -34,7 +34,7 @@ def main():
             try:
                 print(twit)
             except UnicodeEncodeError:
-                print("This tweet contains emjoi, see tweetdeck")
+                print(ascii(twit))
 
 # At least 1 tweet every hour, but no more than every 5 minutes
             timer = random.randint(5, 60)
