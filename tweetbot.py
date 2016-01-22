@@ -45,7 +45,7 @@ def main():
         except tweepy.error.TweepError:
             tbot = login.main()
             watch_dog += 1
-            print("ARF!")
+            print("ARF! " + time.asctime())
             if watch_dog >= 3:
                 print("Multiple login errors")
                 return
