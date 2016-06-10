@@ -1,11 +1,10 @@
 import random
 import re
+import html
 
 import tweepy
 
-nonword = "\a"
-maxchar = 140  # Tweepy ignores strings over 140 characters
-
+nonword = "\n"
 
 def loop_check(item, array):
     for spam in array:
@@ -14,7 +13,7 @@ def loop_check(item, array):
     return True
 
 
-def chain(api, links=2):
+def chain(api, links=3, maxchar=140):
     # GENERATE TABLE
     markov = []
     table = {}
@@ -24,6 +23,7 @@ def chain(api, links=2):
     for tweet in statuses:
         base = tweet.text
         base = re.sub(r'https?.{,18}', '', base)
+        base = html.unescape(base)
         for char in base:
             if not loop_check(char, markov):
                 table.setdefault(tuple(markov), []).append(char)
@@ -35,6 +35,10 @@ def chain(api, links=2):
     table.setdefault(tuple(markov), []).append(nonword)  # mark EOF
 
 # GENERATE OUTPUT
+# if maxchar > 140:
+#    raise warning
+#    maxchar = 140
+
     for i in range(links):
         markov[i] = nonword
     twit = ''
