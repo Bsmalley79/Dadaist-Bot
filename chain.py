@@ -41,16 +41,16 @@ def chain(api, links=3, maxchar=140):
 
     for i in range(links):
         markov[i] = nonword
-    twit = ''
+    twit = []
 
     for i in range(maxchar):
         newchar = random.choice(table[tuple(markov)])
         if newchar == nonword:
             break
-        twit += newchar
+        twit.append(newchar)
         for i in range(links):
             try:
                 markov[i] = markov[i+1]
             except IndexError:
                 markov[-1] = newchar
-    return twit
+    return ''.join(twit)

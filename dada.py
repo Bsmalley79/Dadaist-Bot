@@ -28,17 +28,17 @@ def how_long():  # Returns word length from 1 to 13 letters
 
 
 def long_word(numb_letters):
-    word = ""
+    word = []
 
-    word += weighted_choice(first_letter)
-    if word in vowel_set:
+    word.append(weighted_choice(first_letter))
+    if word[0] in vowel_set:
         vcount = 1
         ccount = 0
     else:
         vcount = 0
         ccount = 1
 
-    word += weighted_choice(general_letter)
+    word.append(weighted_choice(general_letter))
     if word[-1] in vowel_set:
         vcount += 1
         ccount = 0
@@ -48,11 +48,11 @@ def long_word(numb_letters):
 
 # Can't think of any word that starts with a triple consonant
     if ccount == 2:
-        word += weighted_choice(vowel_letter)
+        word.append(weighted_choice(vowel_letter))
         vcount = 1
         ccount = 0
     else:
-        word += weighted_choice(general_letter)
+        word.append(weighted_choice(general_letter))
         if word[-1] in vowel_set:
             vcount += 1
             ccount = 0
@@ -61,16 +61,16 @@ def long_word(numb_letters):
             ccount += 1
 
     if numb_letters == 3:
-        return word
+        return ''.join(word)
 # Research indicates maximum of 3 vowels in a row, and max 4 consonants.
     else:  # Does this else need to be here? -BSmalley79
         for k in range(4, numb_letters + 1):
             if vcount == 3:
-                word += weighted_choice(consonant_letter)
+                word.append(weighted_choice(consonant_letter))
                 vcount = 0
                 ccount = 1
             elif ccount == 4:
-                word += weighted_choice(vowel_letter)
+                word.append(weighted_choice(vowel_letter))
                 vcount = 1
                 ccount = 0
             else:
@@ -78,7 +78,7 @@ def long_word(numb_letters):
 # Re-roll in the case of triple letters.
                 while word[-1] == word[-2] == tempchar:
                     tempchar = weighted_choice(general_letter)
-                word += tempchar
+                word.append(tempchar)
 
                 if word[-1] in vowel_set:
                     vcount += 1
@@ -86,12 +86,12 @@ def long_word(numb_letters):
                 else:
                     vcount = 0
                     ccount += 1
-        return word
+        return ''.join(word)
 
 
 def dada(chars_in_tweet=0):
     word_lengths = []
-    tweet = ""
+    tweet = []
 
     while True:  # Character counter so it stays a tweet and not a book
         length = how_long()
@@ -102,7 +102,7 @@ def dada(chars_in_tweet=0):
 
     for i in range(len(word_lengths)):
         if i == len(word_lengths) - 1 and word_lengths[i] > 1:
-            tweet += '#'
+            tweet.append('#')
 
         if word_lengths[i] == 1:
             if random.random() <= .6486:
@@ -110,12 +110,12 @@ def dada(chars_in_tweet=0):
                 a_or_i = 'a'
             else:  # The rest are I
                 a_or_i = 'I'
-            tweet += (a_or_i + ' ')
+            tweet.append(a_or_i + ' ')
         elif word_lengths[i] == 2:
-            tweet += (weighted_choice(two_letter) + ' ')
+            tweet.append(weighted_choice(two_letter) + ' ')
         else:
-            tweet += (long_word(word_lengths[i]) + ' ')
-    return tweet
+            tweet.append(long_word(word_lengths[i]) + ' ')
+    return ''.join(tweet)
 
 if __name__ == "__main__":
     print(dada())
