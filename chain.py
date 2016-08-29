@@ -23,6 +23,7 @@ def chain(api, links=3, maxchar=140):
     for tweet in statuses:
         base = tweet.text
         base = re.sub(r'https?.{,18}', '', base)
+        base = re.sub(r'RT @', r'.@', base)
         base = html.unescape(base)
         for char in base:
             if not loop_check(char, markov):
