@@ -23,16 +23,8 @@ def main():
                 twit = dada.dada()
             elif (roll == 2 or roll == 3):
                 twit = chain.chain(tbot, 1)
-            elif roll in [4, 5, 6]:
-                twit = chain.chain(tbot, 2)
-            elif roll in [15, 16, 17]:
-                twit = chain.chain(tbot, 4)
-            elif (roll == 18 or roll == 19):
-                twit = chain.chain(tbot, 5)
-            elif roll == 20:
-                twit = chain.chain(tbot, 6)
             else:
-                twit = chain.chain(tbot, 3)
+                twit = chain.chain(tbot, 5)
 
             tbot.update_status(status=twit)
             try:
