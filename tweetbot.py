@@ -9,9 +9,12 @@ import dada
 import chain
 import login
 
+DEBUG = False
+
 
 def main():
-
+    if DEBUG:
+        print("Running in bug squish mode. No tweets will be published")
     watch_dog = 0
     tbot = login.main()
 
@@ -26,11 +29,15 @@ def main():
             else:
                 twit = chain.chain(tbot, 5)
 
-            tbot.update_status(status=twit)
+            if not DEBUG:
+                tbot.update_status(status=twit)
             try:
                 print(twit)
             except UnicodeEncodeError:
                 print(ascii(twit))
+
+            if DEBUG:
+                return
 
 # At least 1 tweet every hour, but no more than every 5 minutes
             timer = random.randint(5, 60)
