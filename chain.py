@@ -4,7 +4,9 @@ import html
 
 import tweepy
 
-nonword = "\n"
+import dada
+
+nonword = "\b"
 
 
 def loop_check(item, array):
@@ -14,31 +16,32 @@ def loop_check(item, array):
     return True
 
 
-# def emoji(faces):
-#    sampled = random.sample([\U0001f600 - \U0001f64f], faces)
-#    return ''.join(sampled)
-
-
 def cleaner(dirty):
     # strip links
     clean = re.sub(r'https?.{,18}', '', dirty)
     # strip retweet sources
-    clean = re.sub(r'RT @.*?: ?', '.', clean)
+    clean = re.sub(r'RT @.*?: ?', '', clean)
     # strip Trump (ew) to be removed after election, probably
-    # use emoji(5) when I get that function working
-    clean = re.sub(r'\b[tT][rR][uU][mM][pP]\b', 'ZQJQZ', clean)
+    clean = re.sub(r'\b[tT][rR][uU][mM][pP]\b', dada.long_word(5), clean)
     # strip &gt; etc
     clean = html.unescape(clean)
+    # put a space on the end to prevent words running together
+    clean = clean + ' '
     return clean
 
 
-def chain(api, links=3, maxchar=140):
+def table_gen(api, links=5, maxchar=140):
     # GENERATE TABLE
     markov = []
     table = {}
     for i in range(links):
         markov.append(nonword)
+
     statuses = api.home_timeline(count=maxchar)
+    if statuses[0].user == api.me:
+        print('No fresh tweets')
+        raise tweepy.error.TweepError
+
     for tweet in statuses:
         base = cleaner(tweet.text)
         for char in base:
@@ -50,15 +53,16 @@ def chain(api, links=3, maxchar=140):
                     except IndexError:
                         markov[-1] = char
     table.setdefault(tuple(markov), []).append(nonword)  # mark EOF
+    return table
 
-# GENERATE OUTPUT
-# if maxchar > 140:
-#    raise warning
-#    maxchar = 140
+
+def tweet_gen(table, links=5, maxchar=140):
+    # GENERATE OUTPUT
+    markov = []
+    twit = []
 
     for i in range(links):
-        markov[i] = nonword
-    twit = []
+        markov.append(nonword) 
 
     for i in range(maxchar):
         newchar = random.choice(table[tuple(markov)])
@@ -71,3 +75,8 @@ def chain(api, links=3, maxchar=140):
             except IndexError:
                 markov[-1] = newchar
     return ''.join(twit)
+
+
+def chain(api, links=5, maxchar=140):
+    ikea = table_gen(api, links, maxchar)
+    return tweet_gen(ikea, links, maxchar)
