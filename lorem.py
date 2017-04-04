@@ -6,9 +6,10 @@ import random
 import tweepy
 
 import chain
+from chain import NONWORD
 import login
 
-DEBUG = True
+DEBUG = False
 
 
 def main():
@@ -22,15 +23,15 @@ def main():
     markov = []
 
     for i in range(5):
-        markov.append(chain.nonword)
+        markov.append(NONWORD)
     if DEBUG:
         print("Writing file")
-    with open("lorem.txt", 'w+t', errors = 'replace') as file:
+    with open("lorem.txt", 'w+t', encoding = 'UTF-8-sig') as file:
         for lines in range(48):
             twit = []
-            for chars in range(79):
+            for chars in range(80):
                 newchar = random.choice(basis[tuple(markov)])
-                if newchar == chain.nonword:
+                if newchar == NONWORD:
                     if DEBUG:
                         print("Hicough on line {}".format(lines+1))
                     for i in range(5):

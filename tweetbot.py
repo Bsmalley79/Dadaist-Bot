@@ -5,7 +5,6 @@ import random
 
 import tweepy
 
-import dada
 import chain
 import login
 
@@ -23,9 +22,9 @@ def main():
             roll = random.randint(1, 20)
             print(roll)
             if roll == 1:
-                twit = dada.dada()
-            elif (roll == 2 or roll == 3):
                 twit = chain.chain(tbot, 1)
+            elif (roll == 2 or roll == 3):
+                twit = chain.chain(tbot, 3)
             else:
                 twit = chain.chain(tbot, 5)
 
@@ -47,7 +46,7 @@ def main():
 
         except tweepy.error.TweepError:
             print("ARF! " + time.asctime())
-            time.sleep((5 ** watch_dog) * 60)
+            time.sleep((5 ** (watch_dog + 1)) * 60)
             tbot = login.main()
             watch_dog += 1
             if watch_dog >= 3:

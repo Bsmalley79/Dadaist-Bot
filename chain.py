@@ -4,9 +4,7 @@ import html
 
 import tweepy
 
-import dada
-
-nonword = "\b"
+NONWORD = "\b"
 
 
 def loop_check(item, array):
@@ -20,9 +18,7 @@ def cleaner(dirty):
     # strip links
     clean = re.sub(r'https?.{,18}', '', dirty)
     # strip retweet sources
-    clean = re.sub(r'RT @.*?: ?', '', clean)
-    # strip Trump (ew) to be removed after election, probably
-    clean = re.sub(r'\b[tT][rR][uU][mM][pP]\b', dada.long_word(5), clean)
+    clean = re.sub(r'RT @.*?: ?', '.', clean)
     # strip &gt; etc
     clean = html.unescape(clean)
     # put a space on the end to prevent words running together
@@ -35,7 +31,7 @@ def table_gen(api, links=5, maxchar=140):
     markov = []
     table = {}
     for i in range(links):
-        markov.append(nonword)
+        markov.append(NONWORD)
 
     statuses = api.home_timeline(count=maxchar)
     if statuses[0].user == api.me:
@@ -52,7 +48,7 @@ def table_gen(api, links=5, maxchar=140):
                         markov[i] = markov[i+1]
                     except IndexError:
                         markov[-1] = char
-    table.setdefault(tuple(markov), []).append(nonword)  # mark EOF
+    table.setdefault(tuple(markov), []).append(NONWORD)  # mark EOF
     return table
 
 
@@ -62,11 +58,11 @@ def tweet_gen(table, links=5, maxchar=140):
     twit = []
 
     for i in range(links):
-        markov.append(nonword) 
+        markov.append(NONWORD) 
 
     for i in range(maxchar):
         newchar = random.choice(table[tuple(markov)])
-        if newchar == nonword:
+        if newchar == NONWORD:
             break
         twit.append(newchar)
         for i in range(links):
@@ -74,7 +70,9 @@ def tweet_gen(table, links=5, maxchar=140):
                 markov[i] = markov[i+1]
             except IndexError:
                 markov[-1] = newchar
-    return ''.join(twit)
+    bad_end =''.join(twit)
+    good_end = bad_end.rpartition(" ")
+    return good_end[0]
 
 
 def chain(api, links=5, maxchar=140):
