@@ -1,6 +1,6 @@
+import html
 import random
 import re
-import html
 
 import tweepy
 
@@ -45,7 +45,7 @@ def table_gen(api, links=5, maxchar=140):
                 table.setdefault(tuple(markov), []).append(char)
                 for i in range(links):
                     try:
-                        markov[i] = markov[i+1]
+                        markov[i] = markov[i + 1]
                     except IndexError:
                         markov[-1] = char
     table.setdefault(tuple(markov), []).append(NONWORD)  # mark EOF
@@ -58,7 +58,7 @@ def tweet_gen(table, links=5, maxchar=140):
     twit = []
 
     for i in range(links):
-        markov.append(NONWORD) 
+        markov.append(NONWORD)
 
     for i in range(maxchar):
         newchar = random.choice(table[tuple(markov)])
@@ -67,10 +67,10 @@ def tweet_gen(table, links=5, maxchar=140):
         twit.append(newchar)
         for i in range(links):
             try:
-                markov[i] = markov[i+1]
+                markov[i] = markov[i + 1]
             except IndexError:
                 markov[-1] = newchar
-    bad_end =''.join(twit)
+    bad_end = ''.join(twit)
     good_end = bad_end.rpartition(" ")
     return good_end[0]
 
