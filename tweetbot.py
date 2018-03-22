@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import random
+import textwrap
 import time
 
 import tweepy
@@ -14,6 +15,7 @@ DEBUG = False
 def main():
     if DEBUG:
         print("Running in bug squish mode. No tweets will be published")
+    wrapper = textwrap.TextWrapper()
     watch_dog = 0
     tbot = login.main()
 
@@ -22,7 +24,7 @@ def main():
             roll = random.randint(1, 20)
             print(roll)
             if roll == 1:
-                twit = chain.chain(tbot, 1)
+                twit = chain.chain(tbot, 2)
             elif (roll == 2 or roll == 3):
                 twit = chain.chain(tbot, 3)
             else:
@@ -31,9 +33,9 @@ def main():
             if not DEBUG:
                 tbot.update_status(status=twit)
             try:
-                print(twit)
+                print(wrapper.fill(twit))
             except UnicodeEncodeError:
-                print(ascii(twit))
+                print(wrapper.fill(ascii(twit)))
 
             if DEBUG:
                 return
@@ -46,12 +48,13 @@ def main():
 
         except tweepy.error.TweepError:
             print("ARF! " + time.asctime())
-            time.sleep((5 ** (watch_dog + 1)) * 60)
-            tbot = login.main()
             watch_dog += 1
-            if watch_dog >= 3:
+            if watch_dog > 3:
                 print("Multiple login errors")
                 return
+            time.sleep((5 ** (watch_dog + 1)) * 60)
+            tbot = login.main()
+            
 
 
 if __name__ == "__main__":

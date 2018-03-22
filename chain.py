@@ -18,7 +18,8 @@ def cleaner(dirty):
     # strip links
     clean = re.sub(r'https?.{,18}', '', dirty)
     # strip retweet sources
-    clean = re.sub(r'RT @.*?: ?', '.', clean)
+    clean = re.sub(r'RT @.*?: ?', '', clean)
+    clean = re.sub(r'@', '', clean)
     # strip &gt; etc
     clean = html.unescape(clean)
     # put a space on the end to prevent words running together
